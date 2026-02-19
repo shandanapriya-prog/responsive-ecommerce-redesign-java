@@ -1,0 +1,53 @@
+<%@ page import="java.sql.*" %>
+<%@ page import="DBConnection" %>
+
+<html>
+<head>
+<style>
+body {
+  font-family: Arial;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 10px;
+  width: 250px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<h2>Product List</h2>
+<div class="container">
+
+<%
+Connection con = DBConnection.getConnection();
+Statement st = con.createStatement();
+ResultSet rs = st.executeQuery("SELECT * FROM products");
+
+while(rs.next()){
+%>
+
+<div class="card">
+    <h3><%= rs.getString("name") %></h3>
+    <p>₹<%= rs.getDouble("price") %></p>
+    <p><%= rs.getString("description") %></p>
+</div>
+
+<% } %>
+
+</div>
+</body>
+</html>
